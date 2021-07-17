@@ -1,0 +1,37 @@
+{% extends 'index.html' %} 
+{% load static %} 
+
+
+{% block container %} 
+
+<div class="container mt-5 ">
+    <div class="col-row">
+        <div class="col gutters center-elements">
+            <img src="{% static 'img/login/mockup.png' %}" alt="" class='img-mockup'>
+        </div>
+
+        <div class="col gutters form-elements center-elements ">
+            <div class="all">
+                <div class="col shadow-sm bg-body rounded form-log py-3 px-3 mt-2 center-elements ">
+                    <img src="{% static 'img/login/logo.png' %}" alt="" class='img-logo'>
+                    <p class="text-muted text-center">
+                        {{phrase}}
+                    </p>
+
+                    <input type="submit" value="Sing Up with Facebook" class="btn btn-primary button"/>
+                    <hr>
+                    {% block form_login %}
+                        {% include 'form.html' %}
+                    {% endblock form_login %}
+                </div>
+                
+                <div class="col shadow-sm bg-body rounded form-log py-3 px-3 mt-2">
+                    Don't have an account? <a href="#">Sing Up</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+   h2
+{% endblock container %}

@@ -1,0 +1,17 @@
+{% load static  %}
+
+<form method="postc" class="form-">
+    {% csrf_token %} 
+        {% for field in form %}
+            <div class="mb-3 form-costume">
+                <label for="exampleInputEmail1" class="form-label">{{field.label}}</label>
+                {{field}}
+            </div>
+        {% endfor %} 
+
+        {% if form.errors %}
+            <p class="alert alert-danger">Your user and password didn't match</p>
+        {% endif %}
+            
+    <input type="submit" value="{{value}}" class="btn btn-primary button" />
+</form>

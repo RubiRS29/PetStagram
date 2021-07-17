@@ -1,0 +1,29 @@
+.form-costume{
+    input{
+        width: 100%;
+        border-radius: 3px;
+        border: 1px  solid grey;
+        outline: none;
+        height: 3rem;
+    }
+}
+.form-log{
+    border: 1px solid rgba(148, 145, 145, 0.212);
+
+
+}
+form{
+    width: 100%;
+}
+
+.form-elements{
+    flex-direction: column;
+}
+
+.img-logo{
+    max-width: 12rem;
+}
+.img-mockup{
+    max-width:50%;
+}
+
