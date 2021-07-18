@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% load static  %}
+
+{% block container %}
+
+        <div class="sticky-top">
+            {% include 'nav_bar.html' %}
+        </div>
+
+        <div class="container container-index mt-5 shadow  bg-body rounded">
+
+            <div class="row ">
+            
+                <div class="col-7 wo-p img-user-post img-detail">
+                    <img src="{{post.picture.url}}" alt="">
+
+                </div>
+
+                <div class="col wo-p">
+                    <div class="col ps-5 center-elements letf-elements py-3 ">
+                        <a href="#" class="img-user">
+                            <img src="{{ post.user.picture.url }}" alt="" > 
+                        </a>
+                        <a href="#" class="direct-user">{{post.user.username}}</a>                               
+                    </div>
+                    <hr>
+                    <div class="post-description px-5">
+                        <p><span class="fw-bolder">{{post.user.username}}</span> {{post.description}}</p>
+                        <p class="text-muted post-date" > {{post.created_at | date:"d F" }} </p>
+                    </div>
+                </div>
+                
+            </div>      
+        </div>
+    
+{% endblock container %}

@@ -24,13 +24,10 @@ class MyUserManager(BaseUserManager):
         return user
     
    
-        
-        
-   
 class Profile(AbstractUser):
     #We need created a User, based on AbstractUser, but with the anothers functions. 
     biography = models.TextField()
-    picture = models.ImageField( upload_to='img/profiles_pictures')
+    picture = models.ImageField( upload_to='profiles_pictures')
     email = models.EmailField(max_length=254, unique=True , blank=False , null=False)
 
     objects = MyUserManager()

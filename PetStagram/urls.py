@@ -21,9 +21,10 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('PetStagram', views.index , name='PetStagram'),
-    path('', views.index , name='PetStagram'),
+    path('PetStagram', views.IndexListView.as_view() , name='PetStagram'),
+    path('', views.IndexListView.as_view() , name='PetStagram'),
     path('', include('User.urls')),
+    path('petStagram/', include('posts.urls')),
 ]
 
 
