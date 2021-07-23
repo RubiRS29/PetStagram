@@ -2,12 +2,14 @@
 
 <div class="col-4 nav-side  mt-5 sticky">
     <div class="col ps-5 center-elements letf-elements py-3 user-side">
-        <a href="#" class="img-user ">
-            <img src="{% static 'img/profiles_pictures/profile1.jpg' %}"alt="" > 
+     {% if request.user.is_authenticated %}
+        <a href="{% url 'profile:user' %}" class="img-user ">
+            <img src="{{ request.user.picture.url }}" >
         </a>
         <div class="">
-            <a href="#" class="direct-user fw-bolder">Rubi Rs</a>                               
-            <p class="text-muted post-date">Rubi Ramirez</p>                         
+            <a href="{% url 'profile:user' %}" class="direct-user fw-bolder">{{request.user.username}}</a>                               
+            <a href="{% url 'profile:user' %}" class="direct-user text-muted ">{{request.user.first_name}}</a>                                                    
         </div>
+    {% endif %}
     </div>   
 </div>

@@ -1,17 +1,22 @@
 {% load static  %}
 
-<form method="postc" class="form-">
+{% comment %} add enctype=”multipart/form-data” when your form need load a file {% endcomment %}
+
+<form method="post"  enctype='multipart/form-data'>
+
     {% csrf_token %} 
         {% for field in form %}
-            <div class="mb-3 form-costume">
-                <label for="exampleInputEmail1" class="form-label">{{field.label}}</label>
+            <div class="mb-3 form-costume form-post">
+                <label for="" class="form-label" id="{{ field.label }}">{{ field.label}}</label>
                 {{field}}
             </div>
+            {% if form.errors %}
+                {% for error in field.errors %} 
+                <p class="alert alert-danger">{{ error }}</p>
+                {% endfor %}
+            {% endif %} 
         {% endfor %} 
 
-        {% if form.errors %}
-            <p class="alert alert-danger">Your user and password didn't match</p>
-        {% endif %}
-            
+
     <input type="submit" value="{{value}}" class="btn btn-primary button" />
 </form>

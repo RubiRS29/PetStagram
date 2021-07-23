@@ -27,15 +27,17 @@ class UserPost(models.Model):
     picture = models.ImageField( upload_to='picture_post')
     slug = models.SlugField(max_length=100, unique=True , blank=True)
     created_at = models.DateTimeField( auto_now=True)
-
     class Meta:
         verbose_name = ("Post")
         verbose_name_plural = ("Posts")
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.slug
 
     def save(self , *args, **kwargs):
+        
+        
         if not self.slug:
             self.slug = slugify(rand_slug())
         super(UserPost, self).save( *args, **kwargs)
