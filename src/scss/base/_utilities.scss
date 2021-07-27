@@ -38,3 +38,19 @@
 .no-margin{
   margin:0;
 }
+
+.div-row{
+  display: flex;
+  align-items:center;
+  i{
+    font-size: 2rem !important;
+  }
+  form{
+    width:auto;
+  }
+  p{
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+
+}

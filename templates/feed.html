@@ -2,13 +2,27 @@
 
 
 {% for post in posts %}
+
 <div class="light shadow p-3 mb-5 bg-body rounded mt-5 wo-p">
 
     <div class="col ps-5 center-elements letf-elements py-3 ">
             <a href="#" class="img-user">
                 <img src="{{ post.user.picture.url }}" alt="" > 
             </a>
-            <a href="#" class="direct-user">{{post.user.username}}</a>                               
+            <a href="#" class="direct-user">{{post.user.username}}</a>  
+
+
+            <form action="{% url 'profile:add_follow' %}" method="POST" class="follow-btn me-3">
+                {% csrf_token %}
+                
+                {% if post.user not in user.follow.all %}
+                    <button type="submit" name="following_user_id" value="{{post.user.id}}" class=" btn btn-primary">Unfollow</button>
+                {% else %}
+                    <button type="submit" name="following_user_id" value="{{post.user.id}}" class=" btn btn-outline-primary">Follow</button>
+                {% endif %}
+                
+            </form>
+</form>                             
     </div>
 
     <div class="col img-user-post">
@@ -16,12 +30,22 @@
             <img src="{{ post.picture.url }}" >
         </a>
     </div>
-    <div class="col ps-5 py-3 post-icon">
-        <i class="bi bi-heart"></i>
-        <i class="bi bi-chat"></i>
-    </div>
-    <div class="likes ps-5">
-        <span class="fw-bolder">10</span> Likes 
+    <div class="col ps-5 py-3 post-icon div-row ">
+        
+        <form action="{% url 'post:like_post' %}" method="POST" class="me-3">
+            {% csrf_token %}
+            {% if user not in post.liked.all %}
+                <button type="submit" name="post_id" value="{{post.id}}" class="like"><i class="bi bi-heart"></i></button>
+            {% else %}
+                <button type="submit" name="post_id" value="{{post.id}}" class="like"><i class="bi bi-heart-fill"></i></button>
+            {% endif %}
+        </form>
+        {% if  post.liked.all.count > 0 %}
+        <p class="me-3"><strong>{{post.liked.all.count}}</strong>  Likes</p>
+           
+        {% endif %}
+
+        <i class="bi bi-chat me-3"></i>
     </div>
     <div class="post-description px-5">
         <p><span class="fw-bolder">{{post.user.username}}</span> {{post.description}}</p>

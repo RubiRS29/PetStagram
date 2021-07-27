@@ -1,0 +1,5 @@
+<form action="profile:add_follow" method="post">
+    {% csrf_token %}
+    <button type="submit" name="following_user_id" value="{{post.id}}" class="like"><i class="bi bi-heart"></i></button>
+    
+</form>

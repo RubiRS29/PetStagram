@@ -29,7 +29,8 @@ class Profile(AbstractUser):
     biography = models.TextField()
     picture = models.ImageField( upload_to='profiles_pictures')
     email = models.EmailField(max_length=254, unique=True , blank=False , null=False)
-
+    follow = models.ManyToManyField("self", verbose_name=("follow"), related_name="follow")
+    
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -38,6 +39,19 @@ class Profile(AbstractUser):
     def __str__(self):
         return self.username 
 
-    
+FOLLOW_CHOICES = (
+    ('Follow', 'Follow'),
+    ('Unfollow', 'Unfollow')
+)   
 
+class UserFollowings(models.Model):
+    user_id = models.ForeignKey(Profile , related_name='following', on_delete=models.CASCADE)#user log
+    following_user_id = models.ForeignKey(Profile , on_delete=models.CASCADE , related_name='followers')#user to follow
+    value = models.CharField(choices = FOLLOW_CHOICES , max_length=10 , default='Follow')
+    created_at = models.DateTimeField(auto_now_add=True) 
+
+    class Meta:
+        ordering = ["-created_at"]
     
+    def __str__(self):
+        return f"{self.user_id} follows {self.following_user_id}"
