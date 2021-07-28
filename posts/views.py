@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView, FormView, CreateView
+from django.views.generic import DetailView, FormView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from .models import UserPost, Like
 from .forms import PostForm
+
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     login_url = '/login'
@@ -13,7 +15,6 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = "post.html"
     context_object_name = 'post'
     
-
 class AddPost(LoginRequiredMixin, CreateView):
     login_url = '/login'
     form_class = PostForm
@@ -34,9 +35,19 @@ class AddPost(LoginRequiredMixin, CreateView):
         context['value'] = "Submit" 
         return context
 
+class UpdatePostView(LoginRequiredMixin,UpdateView):
+    login_url = '/login'
+    model = UserPost
+    template_name = 'update.html'
+    fields = ['picture' , 'description']
+    success_url = '/'
 
-
+def delete_post(request, slug):
+    post = UserPost.objects.get(slug=slug)
+    post.delete() 
     
+    return HttpResponseRedirect(reverse('PetStagram'))
+  
 def like_post(request):
     user = request.user
     if request.method == 'POST':
