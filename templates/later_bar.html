@@ -3,9 +3,11 @@
 <div class="col-4 nav-side  mt-5 sticky">
     <div class="col ps-5 center-elements letf-elements py-3 user-side">
      {% if request.user.is_authenticated %}
-        <a href="{% url 'profile:user' %}" class="img-user ">
-            <img src="{{ request.user.picture.url }}" >
-        </a>
+        {% if request.user.picture.url %}
+            <a href="{% url 'profile:user' %}" class="img-user ">
+                <img src="{{ request.user.picture.url }}" >
+            </a>
+        {% endif %}
         <div class="">
             <a href="{% url 'profile:user' %}" class="direct-user fw-bolder">{{request.user.username}}</a>                               
             <a href="{% url 'profile:user' %}" class="direct-user text-muted ">{{request.user.first_name}}</a>                                                    

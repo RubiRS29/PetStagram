@@ -76,3 +76,4 @@ def like_post(request):
 
     
   
+# i need create an middleware for the user doesn't have photo and biograpy 

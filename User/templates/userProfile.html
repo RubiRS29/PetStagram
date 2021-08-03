@@ -2,30 +2,30 @@
 
 
 
-    <div class="mt-5">
-        <div class="row">
-            <div class="col-4 center-elements">
-                <img src="{{user.picture.url}}" alt="" height="150" width="150" class="img-pu">
+<div class="mt-5">
+    <div class="row">
+        <div class="col-4 center-elements">
+            <img src="{{user.picture.url}}" alt="" height="150" width="150" class="img-pu">
 
-            </div>
-            <div class="col-8"> 
-                <p>{{user.username}}</p>
-                <div class="col">
-                    <p> <span>{{user_post|length}}</span> posts</p>
-                    <p> <span>10</span> following</p> 
-                </div>
-                <p>{{user.description}}</p>
-            </div>
         </div>
-        <hr>
-        <div class="row">
-            {% for post in user_post %}
-                <div class=" col-6 col-sm-4 mt-3 post-user">
-                    <p>{{post.description}}</p>
-                    <img src="{{post.picture.url}}" alt="" class="mb-5 img-userprofile">
-                </div>
-            {% endfor %}
+        <div class="col-8"> 
+            <p>{{user.username}}</p>
+            <div class="col">
+                <p> <span>{{user_post|length}}</span> posts</p>
+                <p> <span>10</span> following</p> 
+            </div>
+            <p>{{user.description}}</p>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        {% for post in user_post %}
+            <div class=" col-6 col-sm-4 mt-3 post-user">
+                <p>{{post.description}}</p>
+                <img src="{{post.picture.url}}" alt="" class="mb-5 img-userprofile">
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
                         

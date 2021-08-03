@@ -35,5 +35,7 @@
     "url": "https://github.com/RubiRS29/To-Do-List/issues"
   },
   "homepage": "https://github.com/RubiRS29/To-Do-List#readme",
-  "dependencies": {}
+  "dependencies": {
+    "mozjpeg": "^7.1.0"
+  }
 }

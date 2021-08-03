@@ -6,10 +6,12 @@
 <div class="light shadow p-3 mb-5 bg-body rounded mt-5 wo-p">
 
     <div class="col ps-5 center-elements letf-elements py-3 ">
-            <a href="#" class="img-user">
+            <a href="{% url 'profile:follow_profile' post.user.username post.user.slug %}" class="img-user">
+            {% if post.user.picture.url %}
                 <img src="{{ post.user.picture.url }}" alt="" > 
+            {% endif %}
             </a>
-            <div class="direct-user"> <a href="#" class="">{{post.user.username}}</a>  </div>
+            <div class="direct-user"> <a href="{% url 'profile:follow_profile' post.user.username post.user.slug %}" class="">{{post.user.username}}</a></div>
             
 
             {% if request.user != post.user %}
@@ -40,9 +42,11 @@
     </div>
 
     <div class="col img-user-post">
-        <a href="{% url 'post:post' post.slug %}">
-            <img src="{{ post.picture.url }}" >
-        </a>
+        {% if post.user.picture.url %}      
+            <a href="{% url 'post:post' post.slug %}">
+                <img src="{{ post.picture.url }}" >
+            </a>
+        {% endif %}
     </div>
     <div class="col ps-5 py-3 post-icon div-row ">
         

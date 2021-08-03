@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% load static  %}
+
+{% block container %}
+
+
+        <div class="sticky-top">
+            {% include 'nav_bar.html' %}
+        </div>
+
+        <div class="container container-index center-elements mt-5">
+            <div class="row center-elements">
+                <div class="col wo-p profile_complete center-elements my-5">
+                    <img src="{% static 'img/login/user.jpg' %}" alt="img-user" id="img_complete" class='hidden'> 
+                </div>
+                <div>
+                    {% include 'form.html' %}
+                </div>
+            </div>      
+        </div>
+{% endblock container %}
+

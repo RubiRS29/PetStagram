@@ -1,8 +1,10 @@
 # imports from django 
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, ListView
+from django.views.generic.edit import UpdateView
+
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -18,24 +20,27 @@ from posts.models import UserPost
 # Create your views here.
 
 class ProfileCreateView(FormView):
-
+    
     template_name = "profile/sing_up.html"
     form_class = ProfileLoginForm
     success_url = reverse_lazy('PetStagram')
 
-
     def form_valid(self, form):
         form.save()
+        email = self.request.POST['email']
+        password = self.request.POST['password']
+        #authenticate user then login
+        user = authenticate(email=email, password=password)
+        login(self.request, user)
+        
+
         return HttpResponseRedirect(self.get_success_url())
     
     def get_context_data(self ,  **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['phrase'] = "Sing up to see photos and videos from your friends"
         context['value'] = "Sing Up"
-        return context
-
-
+        return context   
 class ProfileLogin(LoginView):
     
     # form_class = LoginForm
@@ -47,13 +52,21 @@ class ProfileLogin(LoginView):
         context['phrase'] = "Welcome!"
         context['value'] = "Login"
         return context
-    
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    login_url = '/login'
+    model = Profile
+    template_name = 'profile/complete_profile.html'
+    fields  = ['picture', 'biography']
+
+    def get_context_data(self ,  **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['phrase'] = "Complete your profile"
+        context['value'] = "Complete"
+        return context
 
 def logout_view(request):
     logout(request)
     return redirect('/login')
-
-
 class UserProfileListView(LoginRequiredMixin , ListView):
     login_url = '/login'
     context_object_name = 'user_post'
@@ -73,10 +86,8 @@ class UserProfileListView(LoginRequiredMixin , ListView):
         context['user'] = self.request.user
         return context
 
-
 def create_follower(request):
     user = request.user
-
     if request.method == 'POST':
         user = request.user
         user_id = request.POST.get('following_user_id')
@@ -97,14 +108,27 @@ def create_follower(request):
         follow.save()
 
     return redirect('PetStagram')
+class FollowProfileListView(LoginRequiredMixin , ListView):
+    login_url = '/login'
+    model = UserPost
+    template_name = 'follow_profile.html'
+    ordering = '-created_at'
+    context_object_name = 'user_post'
 
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        user = Profile.objects.get(slug=slug)
+        post_user = self.model.objects.filter(user=user).all()
+        return post_user
 
-
-
-
-
-
-    
+    def get_context_data(self , **kwargs):
+        #we get teh contenxt
+        #then create a new value
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs['slug']
+        user = Profile.objects.get(slug=slug) 
+        context['user'] = user      
+        return context
 
 
 

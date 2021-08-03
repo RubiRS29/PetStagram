@@ -1,8 +1,16 @@
+import random
+import string
+
 from django.db import models
+from django.utils.text import slugify
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.shortcuts import redirect
+from django.urls import reverse
 
 # Create your models here.
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(10))
 
 class MyUserManager(BaseUserManager):
 
@@ -21,16 +29,20 @@ class MyUserManager(BaseUserManager):
         
         user.save(using=self._db)
         
-        return user
-    
+        return user 
    
 class Profile(AbstractUser):
     #We need created a User, based on AbstractUser, but with the anothers functions. 
-    biography = models.TextField()
-    picture = models.ImageField( upload_to='profiles_pictures')
+    biography = models.TextField( blank=True, null=True)
+    picture = models.ImageField( upload_to='profiles_pictures', blank=True, null=True)
     email = models.EmailField(max_length=254, unique=True , blank=False , null=False)
-    follow = models.ManyToManyField("self", verbose_name=("follow"), related_name="follow")
-    
+    follow = models.ManyToManyField("self", verbose_name=("follow"), related_name="follow", blank=True, null=True)
+    slug = models.SlugField(
+                    max_length=100, 
+                    unique=True , 
+                    blank=True
+                    )
+
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -38,6 +50,15 @@ class Profile(AbstractUser):
 
     def __str__(self):
         return self.username 
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.username + slugify(rand_slug()) 
+        super(Profile, self).save( *args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('PetStagram')
+    
 
 FOLLOW_CHOICES = (
     ('Follow', 'Follow'),

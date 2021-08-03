@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'PetStagram.middleware.CompleteProfileMiddleware'
 ]
 
 ROOT_URLCONF = 'PetStagram.urls'
@@ -134,11 +135,11 @@ USE_TZ = True
 
 
 # my changes on settings
-STATIC_URL = '/static/'
+STATIC_URL = '/static/static/'
 
-MEDIA_URL = '/src/img/'
+MEDIA_URL = '/static/img/'
 MEDIA_ROOT = os.path.join(
-    BASE_DIR, "src/img"
+    BASE_DIR, "static/img"
     )
 
 STATICFILES_DIRS = (
